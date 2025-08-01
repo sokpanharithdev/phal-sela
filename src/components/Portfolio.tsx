@@ -96,13 +96,13 @@ export const Portfolio = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="bg-background text-foreground">
       <ThemeToggle />
       
       {/* Hero Section */}
       <section className="relative min-h-screen flex flex-col items-center justify-center px-6 py-20">
         <div className="text-center max-w-4xl mx-auto">
-          {/* Profile Image */}
+          {/* Profile Image with Name Overlay */}
           <div className="relative mb-8">
             <div className="w-48 h-48 mx-auto rounded-full overflow-hidden border-4 border-primary/20 shadow-2xl">
               <img
@@ -110,13 +110,14 @@ export const Portfolio = () => {
                 alt={portfolioData.personal.name}
                 className="w-full h-full object-cover"
               />
+              {/* Name Overlay at 60% from top */}
+              <div className="absolute inset-0 flex items-center justify-center" style={{ paddingTop: '60%' }}>
+                <h1 className="text-3xl md:text-4xl font-bold text-white drop-shadow-2xl tracking-wider text-center px-4">
+                  {portfolioData.personal.name}
+                </h1>
+              </div>
             </div>
           </div>
-
-          {/* Name - Above the image styling */}
-          <h1 className="text-5xl md:text-7xl font-bold mb-4 tracking-wider">
-            {portfolioData.personal.name}
-          </h1>
 
           {/* Typing Animation */}
           <div className="text-xl md:text-2xl text-muted-foreground mb-8 h-8">
