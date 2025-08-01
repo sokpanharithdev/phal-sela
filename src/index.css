@@ -120,35 +120,106 @@
     51%, 100% { opacity: 0; }
   }
   
-  /* Project card animations */
+  /* About Me Collapse Animation */
+  .about-collapse-enter {
+    animation: slideDownFadeIn 0.4s ease-out forwards;
+  }
+  
+  .about-collapse-exit {
+    animation: slideUpFadeOut 0.3s ease-out forwards;
+  }
+  
+  @keyframes slideDownFadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+      max-height: 0;
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+      max-height: 500px;
+    }
+  }
+  
+  @keyframes slideUpFadeOut {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+      max-height: 500px;
+    }
+    to {
+      opacity: 0;
+      transform: translateY(-20px);
+      max-height: 0;
+    }
+  }
+  
+  /* Project card animations - Enhanced for both directions */
   .slide-in-left {
-    animation: slideInLeft 0.6s ease-out forwards;
+    animation: slideInLeft 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
   }
   
   .slide-in-right {
-    animation: slideInRight 0.6s ease-out forwards;
+    animation: slideInRight 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+  }
+  
+  .slide-out-left {
+    animation: slideOutLeft 0.6s cubic-bezier(0.55, 0, 0.45, 1) forwards;
+  }
+  
+  .slide-out-right {
+    animation: slideOutRight 0.6s cubic-bezier(0.55, 0, 0.45, 1) forwards;
   }
   
   @keyframes slideInLeft {
     from {
       opacity: 0;
-      transform: translateX(-100px);
+      transform: translateX(-100px) scale(0.95);
     }
     to {
       opacity: 1;
-      transform: translateX(0);
+      transform: translateX(0) scale(1);
     }
   }
   
   @keyframes slideInRight {
     from {
       opacity: 0;
-      transform: translateX(100px);
+      transform: translateX(100px) scale(0.95);
     }
     to {
       opacity: 1;
-      transform: translateX(0);
+      transform: translateX(0) scale(1);
     }
+  }
+  
+  @keyframes slideOutLeft {
+    from {
+      opacity: 1;
+      transform: translateX(0) scale(1);
+    }
+    to {
+      opacity: 0;
+      transform: translateX(-100px) scale(0.95);
+    }
+  }
+  
+  @keyframes slideOutRight {
+    from {
+      opacity: 1;
+      transform: translateX(0) scale(1);
+    }
+    to {
+      opacity: 0;
+      transform: translateX(100px) scale(0.95);
+    }
+  }
+  
+  /* Default hidden state for projects */
+  .project-hidden {
+    opacity: 0;
+    transform: translateX(0) scale(0.95);
   }
   
   /* Hover effects */

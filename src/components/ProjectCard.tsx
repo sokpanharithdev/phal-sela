@@ -16,18 +16,27 @@ interface Project {
 interface ProjectCardProps {
   project: Project;
   index: number;
-  isVisible: boolean;
+  animationState: 'hidden' | 'entering' | 'visible' | 'exiting';
 }
 
-export const ProjectCard = ({ project, index, isVisible }: ProjectCardProps) => {
-  const animationClass = isVisible 
-    ? index % 2 === 0 
-      ? 'slide-in-left' 
-      : 'slide-in-right'
-    : 'opacity-0 translate-x-0';
+export const ProjectCard = ({ project, index, animationState }: ProjectCardProps) => {
+  const getAnimationClass = () => {
+    const isEven = index % 2 === 0;
+    
+    switch (animationState) {
+      case 'entering':
+        return isEven ? 'slide-in-left' : 'slide-in-right';
+      case 'exiting':
+        return isEven ? 'slide-out-left' : 'slide-out-right';
+      case 'visible':
+        return 'opacity-100';
+      default:
+        return 'project-hidden';
+    }
+  };
 
   return (
-    <Card className={`project-card overflow-hidden bg-card/50 backdrop-blur-sm border-border/50 ${animationClass}`}>
+    <Card className={`project-card overflow-hidden bg-card/50 backdrop-blur-sm border-border/50 ${getAnimationClass()}`}>
       <div className="relative">
         <img
           src={project.image}

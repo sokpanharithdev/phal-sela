@@ -12,35 +12,88 @@ import portfolioData from '../data/portfolio.json';
 export const Portfolio = () => {
   const [activeTab, setActiveTab] = useState('portfolio');
   const [showAbout, setShowAbout] = useState(false);
-  const [visibleProjects, setVisibleProjects] = useState<boolean[]>([]);
+  const [aboutAnimating, setAboutAnimating] = useState(false);
+  const [projectAnimations, setProjectAnimations] = useState<('hidden' | 'entering' | 'visible' | 'exiting')[]>([]);
   const projectRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const lastScrollY = useRef(0);
 
-  // Intersection Observer for project animations
+  // Initialize project animation states
   useEffect(() => {
-    const observers = projectRefs.current.map((ref, index) => {
-      if (!ref) return null;
-      
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) {
-            setVisibleProjects(prev => {
-              const newState = [...prev];
-              newState[index] = true;
-              return newState;
-            });
-          }
-        },
-        { threshold: 0.3 }
-      );
-      
-      observer.observe(ref);
-      return observer;
-    });
-
-    return () => {
-      observers.forEach(observer => observer?.disconnect());
-    };
+    setProjectAnimations(new Array(portfolioData.projects.length).fill('hidden'));
   }, []);
+
+  // Enhanced Intersection Observer for bidirectional animations
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      const scrollDirection = currentScrollY > lastScrollY.current ? 'down' : 'up';
+      lastScrollY.current = currentScrollY;
+
+      projectRefs.current.forEach((ref, index) => {
+        if (!ref) return;
+
+        const rect = ref.getBoundingClientRect();
+        const isVisible = rect.top < window.innerHeight * 0.8 && rect.bottom > window.innerHeight * 0.2;
+
+        setProjectAnimations(prev => {
+          const newState = [...prev];
+          
+          if (isVisible && (prev[index] === 'hidden' || prev[index] === 'exiting')) {
+            newState[index] = 'entering';
+            
+            // Set to visible after animation completes
+            setTimeout(() => {
+              setProjectAnimations(current => {
+                const updated = [...current];
+                if (updated[index] === 'entering') {
+                  updated[index] = 'visible';
+                }
+                return updated;
+              });
+            }, 800);
+            
+          } else if (!isVisible && (prev[index] === 'visible' || prev[index] === 'entering')) {
+            newState[index] = 'exiting';
+            
+            // Set to hidden after animation completes
+            setTimeout(() => {
+              setProjectAnimations(current => {
+                const updated = [...current];
+                if (updated[index] === 'exiting') {
+                  updated[index] = 'hidden';
+                }
+                return updated;
+              });
+            }, 600);
+          }
+          
+          return newState;
+        });
+      });
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Check initial state
+    
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Handle About Me toggle with animation
+  const handleAboutToggle = () => {
+    if (showAbout) {
+      setAboutAnimating(true);
+      setTimeout(() => {
+        setShowAbout(false);
+        setAboutAnimating(false);
+      }, 300);
+    } else {
+      setShowAbout(true);
+      setAboutAnimating(true);
+      setTimeout(() => {
+        setAboutAnimating(false);
+      }, 400);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -113,15 +166,17 @@ export const Portfolio = () => {
           <div className="mb-12">
             <Button
               variant="ghost"
-              onClick={() => setShowAbout(!showAbout)}
+              onClick={handleAboutToggle}
               className="text-foreground hover:text-primary transition-colors flex items-center gap-2 mx-auto"
             >
               More About Me
-              <ChevronDown className={`w-4 h-4 transition-transform ${showAbout ? 'rotate-180' : ''}`} />
+              <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${showAbout ? 'rotate-180' : ''}`} />
             </Button>
             
-            {showAbout && (
-              <div className="mt-6 max-w-2xl mx-auto">
+            {(showAbout || aboutAnimating) && (
+              <div className={`mt-6 max-w-2xl mx-auto overflow-hidden ${
+                showAbout && !aboutAnimating ? 'about-collapse-enter' : 'about-collapse-exit'
+              }`}>
                 <Card className="p-6 bg-card/50 backdrop-blur-sm border-border/50">
                   <p className="text-muted-foreground leading-relaxed">
                     {portfolioData.personal.aboutMe}
@@ -159,7 +214,7 @@ export const Portfolio = () => {
                     <ProjectCard 
                       project={project}
                       index={index}
-                      isVisible={visibleProjects[index] || false}
+                      animationState={projectAnimations[index] || 'hidden'}
                     />
                   </div>
                 ))}
