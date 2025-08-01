@@ -1,10 +1,13 @@
+import { useNavigate } from 'react-router-dom';
 import { ExternalLink } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 interface Project {
   id: number;
   title: string;
+  slug: string;
   category: string;
   image: string;
   description: string;
@@ -20,6 +23,8 @@ interface ProjectCardProps {
 }
 
 export const ProjectCard = ({ project, index, animationState }: ProjectCardProps) => {
+  const navigate = useNavigate();
+  
   const getAnimationClass = () => {
     const isEven = index % 2 === 0;
     
@@ -33,6 +38,10 @@ export const ProjectCard = ({ project, index, animationState }: ProjectCardProps
       default:
         return 'project-hidden';
     }
+  };
+
+  const handleViewProject = () => {
+    navigate(`/project/${project.slug}`);
   };
 
   return (
@@ -50,12 +59,14 @@ export const ProjectCard = ({ project, index, animationState }: ProjectCardProps
         >
           {project.category}
         </Badge>
-        <a
-          href={project.link}
-          className="absolute top-4 right-4 w-10 h-10 bg-primary/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-primary/40 transition-colors"
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={handleViewProject}
+          className="absolute top-4 right-4 w-10 h-10 bg-primary/20 backdrop-blur-sm rounded-full text-white hover:bg-primary/40 transition-colors"
         >
           <ExternalLink className="w-4 h-4" />
-        </a>
+        </Button>
       </div>
       
       <div className="p-6">
