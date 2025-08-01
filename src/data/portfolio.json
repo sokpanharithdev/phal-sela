@@ -1,0 +1,54 @@
+{
+  "personal": {
+    "name": "PHAL SELA",
+    "title": ["UX UI DESIGNER", "FRONTEND DEVELOPER", "PRODUCT DESIGNER"],
+    "profileImage": "/lovable-uploads/00e9cd38-f31f-4629-b59c-baee1ecea58a.png",
+    "description": "Discover my diverse portfolio showcasing polished digital solutions crafted for clients across various industries.",
+    "aboutMe": "I am a passionate UX/UI Designer with 2 years of experience creating intuitive and visually appealing digital experiences. My expertise lies in user-centered design, prototyping, and developing comprehensive design systems. I have successfully delivered 5+ projects across various industries including education, food delivery, and enterprise solutions. My design philosophy centers around creating meaningful connections between users and products through thoughtful design decisions and seamless user experiences.",
+    "stats": {
+      "experience": "2",
+      "projects": "5+"
+    },
+    "socialLinks": {
+      "linkedin": "https://linkedin.com",
+      "telegram": "https://telegram.org",
+      "facebook": "https://facebook.com",
+      "behance": "https://behance.net"
+    }
+  },
+  "projects": [
+    {
+      "id": 1,
+      "title": "SPIK - School Management",
+      "category": "Dashboard",
+      "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=500&fit=crop",
+      "description": "A comprehensive school management system with intuitive dashboard design for administrators, teachers, and students.",
+      "technologies": ["React", "TypeScript", "Tailwind CSS"],
+      "link": "#"
+    },
+    {
+      "id": 2,
+      "title": "BROWN Food Delivery App",
+      "category": "Mobile App",
+      "image": "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=500&fit=crop",
+      "description": "A mobile application for coffee and bakery delivery with 50+ screens and components, featuring seamless user experience.",
+      "technologies": ["Figma", "React Native", "UI Kit"],
+      "screens": "50+",
+      "link": "#"
+    }
+  ],
+  "skills": [
+    {
+      "category": "Design Tools",
+      "items": ["Figma", "Adobe XD", "Sketch", "Adobe Photoshop", "Adobe Illustrator"]
+    },
+    {
+      "category": "Development",
+      "items": ["HTML/CSS", "JavaScript", "React", "TypeScript", "Tailwind CSS"]
+    },
+    {
+      "category": "Design Skills",
+      "items": ["User Research", "Wireframing", "Prototyping", "Design Systems", "Usability Testing"]
+    }
+  ]
+}
