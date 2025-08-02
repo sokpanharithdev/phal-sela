@@ -1,8 +1,9 @@
 {
   "personal": {
     "name": "PHAL SELA",
-    "title": ["UX UI DESIGNER", "FRONTEND DEVELOPER", "PRODUCT DESIGNER"],
-    "profileImage": "/lovable-uploads/00e9cd38-f31f-4629-b59c-baee1ecea58a.png",
+    "title": ["UX UI DESIGNER"],
+    "profileImage": "/sela/my-photo/profile.jpg",
+    "profileImage1": "/sela/my-photo/me.jpg",
     "description": "Discover my diverse portfolio showcasing polished digital solutions crafted for clients across various industries.",
     "aboutMe": "My passion lies in the intersection of art and technology, creating visually captivating interfaces and elevating overall user digital experiences.",
     "education": [
