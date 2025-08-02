@@ -224,30 +224,36 @@ export const Portfolio = () => {
           )}
 
           {activeTab === 'skills' && (
-            <div className="max-w-4xl mx-auto">
-              <div className="text-center mb-12">
-                <Badge variant="secondary" className="mb-4">
-                  Skills & Expertise
-                </Badge>
-              </div>
-              
-              <div className="grid md:grid-cols-3 gap-8">
-                {portfolioData.skills.map((skillCategory, index) => (
-                  <Card key={index} className="p-6 bg-card/50 backdrop-blur-sm border-border/50">
-                    <h3 className="text-xl font-semibold mb-4 text-center text-primary">
-                      {skillCategory.category}
-                    </h3>
-                    <div className="space-y-3">
-                      {skillCategory.items.map((skill, idx) => (
-                        <div key={idx} className="text-center">
-                          <Badge variant="outline" className="text-sm">
-                            {skill}
-                          </Badge>
-                        </div>
-                      ))}
-                    </div>
-                  </Card>
-                ))}
+            <div className="max-w-6xl mx-auto">
+              {/* Skills Categories */}
+              <div className="flex justify-center gap-16 mb-16">
+                <div className="text-center">
+                  <h2 className="text-2xl font-semibold text-foreground mb-8">UX</h2>
+                  <div className="grid grid-cols-2 gap-4 max-w-md">
+                    {portfolioData.skills.UX.map((skill, index) => (
+                      <div
+                        key={index}
+                        className="bg-secondary/10 backdrop-blur-sm border border-border/30 rounded-lg px-4 py-3 text-center hover:bg-secondary/20 transition-colors"
+                      >
+                        <span className="text-sm font-medium text-primary">{skill}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                
+                <div className="text-center">
+                  <h2 className="text-2xl font-semibold text-foreground mb-8">UI</h2>
+                  <div className="grid grid-cols-2 gap-4 max-w-md">
+                    {portfolioData.skills.UI.map((skill, index) => (
+                      <div
+                        key={index}
+                        className="bg-secondary/10 backdrop-blur-sm border border-border/30 rounded-lg px-4 py-3 text-center hover:bg-secondary/20 transition-colors"
+                      >
+                        <span className="text-sm font-medium text-primary">{skill}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           )}

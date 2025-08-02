@@ -51,18 +51,22 @@
       "link": "#"
     }
   ],
-  "skills": [
-    {
-      "category": "Design Tools",
-      "items": ["Figma", "Adobe XD", "Sketch", "Adobe Photoshop", "Adobe Illustrator"]
-    },
-    {
-      "category": "Development",
-      "items": ["HTML/CSS", "JavaScript", "React", "TypeScript", "Tailwind CSS"]
-    },
-    {
-      "category": "Design Skills",
-      "items": ["User Research", "Wireframing", "Prototyping", "Design Systems", "Usability Testing"]
-    }
-  ]
+  "skills": {
+    "UX": [
+      "User Research",
+      "Prototyping", 
+      "Interaction Design",
+      "User Research",
+      "Wireframing",
+      "User Stories"
+    ],
+    "UI": [
+      "Design Systems",
+      "Layout & Structure",
+      "Color Theory", 
+      "Typography",
+      "Iconography",
+      "Mockups"
+    ]
+  }
 }
