@@ -175,14 +175,54 @@ export const Portfolio = () => {
             </Button>
             
             {(showAbout || aboutAnimating) && (
-              <div className={`mt-6 max-w-2xl mx-auto overflow-hidden ${
+              <div className={`mt-6 max-w-6xl mx-auto overflow-hidden ${
                 showAbout && !aboutAnimating ? 'about-collapse-enter' : 'about-collapse-exit'
               }`}>
-                <Card className="p-6 bg-card/50 backdrop-blur-sm border-border/50">
-                  <p className="text-muted-foreground leading-relaxed">
-                    {portfolioData.personal.aboutMe}
-                  </p>
-                </Card>
+                <div className="grid md:grid-cols-2 gap-8">
+                  {/* Profile Card */}
+                  <Card className="p-8 bg-card/50 backdrop-blur-sm border-border/50">
+                    <div className="text-center">
+                      <div className="w-32 h-32 mx-auto rounded-full overflow-hidden mb-6 border-4 border-primary/20">
+                        <img
+                          src={portfolioData.personal.profileImage}
+                          alt={portfolioData.personal.name}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <h3 className="text-2xl font-bold text-foreground mb-2">
+                        Phal Sela
+                      </h3>
+                      <p className="text-lg text-primary mb-6">
+                        UX UI Designer
+                      </p>
+                      <p className="text-muted-foreground leading-relaxed">
+                        {portfolioData.personal.aboutMe}
+                      </p>
+                    </div>
+                  </Card>
+
+                  {/* Education Timeline */}
+                  <Card className="p-8 bg-card/50 backdrop-blur-sm border-border/50">
+                    <div className="space-y-6">
+                      {portfolioData.personal.education?.map((edu, index) => (
+                        <div key={index} className="border-l-2 border-primary/30 pl-6 relative">
+                          <div className="absolute w-3 h-3 bg-primary rounded-full -left-2 top-1"></div>
+                          <div className="flex justify-between items-start mb-2">
+                            <h4 className="text-lg font-semibold text-foreground">
+                              {edu.title}
+                            </h4>
+                            <span className="text-sm text-muted-foreground bg-secondary/20 px-3 py-1 rounded-full">
+                              {edu.period}
+                            </span>
+                          </div>
+                          <p className="text-muted-foreground text-sm leading-relaxed">
+                            {edu.description}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </Card>
+                </div>
               </div>
             )}
           </div>
