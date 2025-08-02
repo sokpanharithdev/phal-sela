@@ -1,10 +1,28 @@
 {
   "personal": {
     "name": "PHAL SELA",
-    "title": ["UX UI DESIGNER", "FRONTEND DEVELOPER", "PRODUCT DESIGNER"],
-    "profileImage": "/lovable-uploads/00e9cd38-f31f-4629-b59c-baee1ecea58a.png",
+    "title": ["UX UI DESIGNER"],
+    "profileImage": "/sela/my-photo/profile.jpg",
+    "profileImage1": "/sela/my-photo/me.jpg",
     "description": "Discover my diverse portfolio showcasing polished digital solutions crafted for clients across various industries.",
-    "aboutMe": "I am a passionate UX/UI Designer with 2 years of experience creating intuitive and visually appealing digital experiences. My expertise lies in user-centered design, prototyping, and developing comprehensive design systems. I have successfully delivered 5+ projects across various industries including education, food delivery, and enterprise solutions. My design philosophy centers around creating meaningful connections between users and products through thoughtful design decisions and seamless user experiences.",
+    "aboutMe": "My passion lies in the intersection of art and technology, creating visually captivating interfaces and elevating overall user digital experiences.",
+    "education": [
+      {
+        "title": "Professional UX UI Design",
+        "period": "2023 - 2024",
+        "description": "Graduated and get professional certificate of UX UI Design at Future.bit Academy."
+      },
+      {
+        "title": "Management",
+        "period": "2019 - 2023",
+        "description": "Bachelor's degree of Management at National University of Management"
+      },
+      {
+        "title": "High School",
+        "period": "2016 - 2019",
+        "description": "Graduated from High School at Royal Crusade High School"
+      }
+    ],
     "stats": {
       "experience": "2",
       "projects": "5+"
@@ -51,18 +69,22 @@
       "link": "#"
     }
   ],
-  "skills": [
-    {
-      "category": "Design Tools",
-      "items": ["Figma", "Adobe XD", "Sketch", "Adobe Photoshop", "Adobe Illustrator"]
-    },
-    {
-      "category": "Development",
-      "items": ["HTML/CSS", "JavaScript", "React", "TypeScript", "Tailwind CSS"]
-    },
-    {
-      "category": "Design Skills",
-      "items": ["User Research", "Wireframing", "Prototyping", "Design Systems", "Usability Testing"]
-    }
-  ]
+  "skills": {
+    "UX": [
+      "User Research",
+      "Prototyping", 
+      "Interaction Design",
+      "User Research",
+      "Wireframing",
+      "User Stories"
+    ],
+    "UI": [
+      "Design Systems",
+      "Layout & Structure",
+      "Color Theory", 
+      "Typography",
+      "Iconography",
+      "Mockups"
+    ]
+  }
 }
