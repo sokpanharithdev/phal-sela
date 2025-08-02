@@ -304,6 +304,7 @@ export const Portfolio = () => {
                       <h3 className="text-2xl font-semibold text-foreground mb-8">UX</h3>
                     </div>
                   </div>
+
                   <div className="grid grid-cols-2 gap-4 max-w-md">
                     {portfolioData.skills.UX.map((skill, index) => (
                       <div
