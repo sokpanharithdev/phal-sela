@@ -10,7 +10,6 @@ interface Project {
   slug: string;
   category: string;
   image: string;
-  description: string;
   technologies?: string[];
   screens?: string;
   link: string;

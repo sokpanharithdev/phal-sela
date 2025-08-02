@@ -35,12 +35,12 @@ export default function ProjectDetail() {
           className="mb-8 hover:bg-accent"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
-          Back to Portfolio
+          Back
         </Button>
 
         {/* Project Header */}
-        <div className="flex justify-center items-center mb-12 mt-10">
-          <img alt='profile' src={project.logo} width={200} height={200}/>
+        <div className="flex justify-center items-center mb-16 mt-10">
+          <img alt='profile' src={project.logo} width={150} height={150}/>
         </div>
 
         {/* Full Description */}
@@ -52,6 +52,16 @@ export default function ProjectDetail() {
               </p>
             ))}
           </div>
+        </div>
+
+        <div>
+          <p className='text-md mb-2'>Role</p>
+          <Badge
+            variant="outline"
+            className="text-sm border-border/50 text-foreground dark:border-white mb-12"
+          >
+            <p className='text-foreground p-2'>{project.role}</p>
+          </Badge>
         </div>
 
         {/* Project Images */}

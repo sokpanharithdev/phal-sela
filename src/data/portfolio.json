@@ -3,7 +3,7 @@
     "name": "PHAL SELA",
     "title": ["UX UI DESIGNER"],
     "profileImage": "/sela/my-photo/profile.png",
-    "profileImage1": "/sela/my-photo/me.png",
+    "profileImage1": "/sela/my-photo/me.jpg",
     "description": "Discover my diverse portfolio showcasing polished digital solutions crafted for clients across various industries.",
     "aboutMe": "My passion lies in the intersection of art and technology, creating visually captivating interfaces and elevating overall user digital experiences.",
     "education": [
@@ -28,10 +28,10 @@
       "projects": "5+"
     },
     "socialLinks": {
-      "linkedin": "https://linkedin.com",
-      "telegram": "https://telegram.org",
-      "facebook": "https://facebook.com",
-      "behance": "https://behance.net"
+      "linkedin": "https://www.linkedin.com/in/phal-sela-20856028b/",
+      "telegram": "https://web.telegram.org/k/",
+      "facebook": "https://www.facebook.com/cycycycysela",
+      "behance": "https://www.behance.net/sila8"
     }
   },
   "projects": [
