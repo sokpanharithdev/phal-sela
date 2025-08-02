@@ -40,7 +40,7 @@ export default function ProjectDetail() {
 
         {/* Project Header */}
         <div className="flex justify-center items-center mb-12 mt-10">
-          <img alt='profile' src={project.image} width={200} height={200}/>
+          <img alt='profile' src={project.logo} width={200} height={200}/>
         </div>
 
         {/* Full Description */}
@@ -57,8 +57,8 @@ export default function ProjectDetail() {
         {/* Project Images */}
         <div className="space-y-8">
           {project.images?.map((image, index) => (
-            <Card key={index} className="overflow-hidden bg-gradient-to-br from-purple-600/20 to-blue-600/20 p-8">
-              <div className="rounded-lg overflow-hidden shadow-2xl">
+            <Card key={index} className="overflow-hidden">
+              <div className="overflow-hidden shadow-2xl">
                 <img 
                   src={image} 
                   alt={`${project.title} screenshot ${index + 1}`}

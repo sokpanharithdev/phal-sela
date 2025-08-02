@@ -134,14 +134,14 @@ export const Portfolio = () => {
         <div className="text-center max-w-4xl mx-auto">
           {/* Profile Image with Name Overlay */}
           <div className="relative mb-8">
-            <div className="w-48 h-48 mx-auto rounded-full overflow-hidden">
+            <div className="w-48 h-48 mx-auto overflow-hidden">
               <img
                 src={portfolioData.personal.profileImage}
                 alt={portfolioData.personal.name}
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 flex items-center justify-center" style={{ paddingTop: '20%' }}>
-                <p className="h-1.5 md:text-7xl font-bold drop-shadow-2xl tracking-wider text-center px-4">{portfolioData.personal.name}</p>
+              <div className="absolute inset-0 flex items-center justify-center" style={{ paddingTop: '25%' }}>
+                <p className="h-1.5 md:text-7xl font-bold drop-shadow-2xl tracking-wider text-center px-4 dark:text-white text-black dark:shadow-none">{portfolioData.personal.name}</p>
               </div>
             </div>
           </div>

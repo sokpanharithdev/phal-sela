@@ -1,4 +1,4 @@
-import { Linkedin, Send, Facebook } from "lucide-react";
+import { Linkedin, Send, Facebook, LinkedinIcon } from "lucide-react";
 
 interface SocialIconsProps {
   socialLinks: {
@@ -11,7 +11,7 @@ interface SocialIconsProps {
 
 export const SocialIcons = ({ socialLinks }: SocialIconsProps) => {
   const icons = [
-    { icon: Linkedin, link: socialLinks.linkedin, color: "bg-blue-600" },
+    { icon: LinkedinIcon, link: socialLinks.linkedin, color: "bg-blue-600" },
     { icon: Send, link: socialLinks.telegram, color: "bg-blue-500" },
     { icon: Facebook, link: socialLinks.facebook, color: "bg-blue-700" },
     { 

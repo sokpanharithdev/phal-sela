@@ -2,8 +2,8 @@
   "personal": {
     "name": "PHAL SELA",
     "title": ["UX UI DESIGNER"],
-    "profileImage": "/sela/my-photo/profile.jpg",
-    "profileImage1": "/sela/my-photo/me.jpg",
+    "profileImage": "/sela/my-photo/profile.png",
+    "profileImage1": "/sela/my-photo/me.png",
     "description": "Discover my diverse portfolio showcasing polished digital solutions crafted for clients across various industries.",
     "aboutMe": "My passion lies in the intersection of art and technology, creating visually captivating interfaces and elevating overall user digital experiences.",
     "education": [
@@ -40,14 +40,15 @@
       "title": "SPIK - School Management",
       "slug": "spik-school-management",
       "category": "Dashboard",
-      "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=500&fit=crop",
-      "description": "A comprehensive school management system with intuitive dashboard design for administrators, teachers, and students.",
-      "fullDescription": "School Management Dashboard offers a centralized and intuitive platform designed to streamline operations for schools of all sizes. Through this platform, admins can manage student data, monitor attendance, organize class schedules, and oversee staff activities with ease.\n\nTeachers are empowered to track student performance, assign grades, and communicate effectively with students and parents, while students can access learning materials, view timetables, and stay updated on academic progress. With a clean interface and role-based access (Admin, Teacher, Student), the system ensures a smooth, secure, and efficient educational experience for all users.\n\nI applied a user-centered design approach to develop a school management dashboard tailored for administrators, teachers, and students. This involved understanding academic workflows and system requirements, then utilizing UX tools such as user flows, wireframes, interactive prototypes, and mockups to transform those requirements into intuitive, role-based user experiences.",
+      "image": "/sela/spik/thumbnail.png",
+      "fullDescription": "School Management Dashboard offers a centralized and intuitive platform designed to streamline operations for schools of all sizes. Through this platform, admins can manage student data, monitor attendance, organize class schedules, and oversee staff activities with ease. Teachers are empowered to track student performance, assign grades, and communicate effectively with students and parents, while students can access learning materials, view timetables, and stay updated on academic progress. With a clean interface and role-based access (Admin, Teacher, Student), the system ensures a smooth, secure, and efficient educational experience for all users.\n\n I applied a user-centered design approach to develop a school management dashboard tailored for administrators, teachers, and students. This involved understanding academic workflows and system requirements, then utilizing UX tools such as user flows, wireframes, interactive prototypes, and mockups to transform those requirements into intuitive, role-based user experiences.",
       "role": "UI/UX Designer",
-      "technologies": ["React", "TypeScript", "Tailwind CSS"],
+      "technologies": ["Dashboard"],
+      "logo": "/sela/spik.png",
       "images": [
-        "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=800&fit=crop",
-        "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=800&fit=crop"
+        "/sela/spik/1.png",
+        "/sela/spik/2.png",
+        "/sela/spik/3.png"
       ],
       "link": "#"
     },
@@ -56,15 +57,70 @@
       "title": "BROWN Food Delivery App",
       "slug": "brown-food-delivery",
       "category": "Mobile App",
-      "image": "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=500&fit=crop",
-      "description": "A mobile application for coffee and bakery delivery with 50+ screens and components, featuring seamless user experience.",
-      "fullDescription": "BROWN is a comprehensive food delivery application focused on coffee and bakery items. The app features an intuitive user interface with over 50+ carefully designed screens and components.\n\nThe application includes features such as menu browsing, order customization, real-time tracking, payment integration, and user account management. Special attention was given to the user journey from discovery to delivery, ensuring a smooth and delightful experience.\n\nThe design system includes a cohesive color palette, typography, and component library that maintains consistency across all screens while providing an engaging and modern user experience.",
+      "image": "/sela/brown/thumbnail.png",
+      "fullDescription": "The Brown Coffee mobile app was thoughtfully redesigned to elevate user engagement, simplify the rewards experience, and create a smoother ordering journey tailored for coffee enthusiasts in Cambodia. The redesign focused on delivering a modern, mobile-first interface that reflects the brand’s premium lifestyle while addressing usability issues and aligning with user behaviors. Key improvements centered around intuitive navigation, personalized interactions, and clear user flows—making it easier for customers to explore the menu, earn and redeem rewards, and place orders with confidence.\n\nI collaborated closely with developers during the Brown Coffee mobile app redesign to bring every interaction to life through smooth, intuitive animations. Beyond UX/UI design, I focused on ensuring each animation aligned with my Figma prototypes, maintaining consistency across the user journey. I paid close attention to motion details—such as transitions, micro-interactions, and feedback states—to enhance both usability and the overall aesthetic of the app.",
+      "role": "Project Lead | UI/UX Designer",
+      "technologies": ["Mobile App"],
+      "screens": "50+",
+      "logo": "/sela/brown.png",
+      "images": [
+        "/sela/brown/1.png",
+        "/sela/brown/2.png",
+        "/sela/brown/3.png"
+      ],
+      "link": "#"
+    },
+    {
+      "id": 3,
+      "title": "Bassline Music Mobile App",
+      "slug": "bassline-music-app",
+      "category": "Mobile App",
+      "image": "/sela/bassline/thumbnail.png",
+      "description": "",
+      "fullDescription": "Bassline is a mobile music application inspired by the vibrant and rebellious spirit of hip-hop culture. The project was designed to deliver a raw, immersive, and personalized experience for users who live and breathe hip-hop—blending urban aesthetics, audio storytelling, and community features into one cohesive platform. The goal was to create a user experience that resonates with the authentic vibe of street culture, while providing a smooth and modern interface for discovering, streaming, and interacting with hip-hop music and artists.\n\n I was responsible for the overall UX/UI design of the Bassline Music App, which reflects hip-hop culture. Beyond layout and visuals, I worked directly with developers to bring my designs to life through interactive animations. My goal was to make the app feel alive, urban, and responsive—keeping the energy of hip-hop while improving the user experience.",
+      "role": "Lead | UI/UX Designer",
+      "technologies": ["Mobile App"],
+      "screens": "50+",
+      "logo": "/sela/bass.png",
+      "images": [
+        "/sela/bassline/1.png",
+        "/sela/bassline/2.png",
+        "/sela/bassline/3.png"
+      ],
+      "link": "#"
+    },
+    {
+      "id": 4,
+      "title": "RESTIN Hotel Booking",
+      "slug": "rentkh-car-rent",
+      "category": "Mobile App",
+      "image": "/sela/restin/thumbnail.png",
+      "fullDescription": "RESTIN is a hotel booking app designed to offer travelers a seamless and user-friendly way to discover, compare, and reserve accommodations. The project focuses on simplifying the booking process while delivering a polished, modern UI tailored for both local and international users.\n\n My role included designing the full UX/UI flow—from wireframes to high-fidelity prototypes—ensuring an intuitive user experience across all pages. I implemented a mobile-first approach with key features such as personalized hotel recommendations, smart filters, booking calendar, secure payment interface, and a clean booking confirmation screen. The app is crafted to build user trust, improve booking speed, and make travel planning feel effortless.",
       "role": "UI/UX Designer",
-      "technologies": ["Figma", "React Native", "UI Kit"],
+      "technologies": ["Mobile App"],
+      "screens": "50+",
+      "logo": "/sela/restin.png",
+      "images": [
+        "/sela/restin/1.png",
+        "/sela/restin/2.png",
+        "/sela/restin/3.png"
+      ],
+      "link": "#"
+    },
+    {
+      "id": 5,
+      "title": "RENTKH Car Rent",
+      "slug": "rentkh-car-rent",
+      "category": "Web Design",
+      "image": "/sela/restin/thumbnail.png",
+      "fullDescription": "RESTIN is a hotel booking app designed to offer travelers a seamless and user-friendly way to discover, compare, and reserve accommodations. The project focuses on simplifying the booking process while delivering a polished, modern UI tailored for both local and international users.\n\n My role included designing the full UX/UI flow—from wireframes to high-fidelity prototypes—ensuring an intuitive user experience across all pages. I implemented a mobile-first approach with key features such as personalized hotel recommendations, smart filters, booking calendar, secure payment interface, and a clean booking confirmation screen. The app is crafted to build user trust, improve booking speed, and make travel planning feel effortless.",
+      "role": "UI/UX Designer",
+      "technologies": ["Web Design"],
       "screens": "50+",
       "images": [
-        "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1200&h=800&fit=crop",
-        "https://images.unsplash.com/photo-1559925393-8be0ec4767c8?w=1200&h=800&fit=crop"
+        "/sela/restin/1.png",
+        "/sela/restin/2.png",
+        "/sela/restin/3.png"
       ],
       "link": "#"
     }
