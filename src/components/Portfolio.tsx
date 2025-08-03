@@ -70,7 +70,7 @@ export const Portfolio = () => {
             }, index * 150); // 150ms delay between each project
           }
         });
-      }, 50); // 50ms debounce
+      }, 0); // 50ms debounce
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -211,7 +211,7 @@ export const Portfolio = () => {
                         <div className="grid md:grid-cols-1 gap-8 mt-8">
                           {/* Profile Card */}
                           <div className="grid xs:grid-cols-1 md:grid-cols-2 gap-8">
-                          <Card className="p-6 border-none bg-white/5">
+                          <Card className="p-6 border-none bg-[#F2F2F2] dark:bg-white/5">
                             <div className="text-center">
                               <div className="w-32 h-4/6 mx-auto rounded-md overflow-hidden mb-6">
                                 <img
@@ -236,7 +236,7 @@ export const Portfolio = () => {
                           <Card className="backdrop-blur-sm border-none ">
                             <div className="space-y-6 flex flex-col justify-between">
                               {portfolioData.personal.education?.map((edu, index) => (
-                                <div key={index} className='px-3 [box-shadow:0_-3px_0px_-1px_rgba(255,255,255,0.1),0_-2px_0px_-2px_rgba(0,0,0,0.1)] pb-10 rounded-sm pt-3'>
+                                <div key={index} className='px-3 [box-shadow:0_-2.5px_0px_-1px_rgba(0,0,0,0.2),0_-2px_0px_-2px_rgba(0,0,0,0.1)] dark:[box-shadow:0_-3px_0px_-1px_rgba(255,255,255,0.1),0_-2px_0px_-2px_rgba(0,0,0,0.1)] pb-10 rounded-sm pt-3'>
                                   <div className=""></div>
                                   <div className="flex justify-between items-start mb-2">
                                     <h4 className="text-lg font-semibold text-foreground">
@@ -309,7 +309,7 @@ export const Portfolio = () => {
                       {portfolioData.skills.UX.map((skill, index) => (
                         <div
                           key={index}
-                          className="bg-[#F2F2F2] dark:bg-secondary/10 dark:backdrop-blur-sm rounded-lg px-4 py-3 text-center hover:bg-secondary/20 transition-colors"
+                          className="bg-[#F2F2F2] dark:bg-secondary/10 dark:backdrop-blur-sm rounded-lg px-4 py-3 text-center dark:hover:bg-secondary/20 hover:bg-[#F2F2F2] transition-colors"
                         >
                           <span className="text-sm font-medium text-primary">{skill}</span>
                         </div>
