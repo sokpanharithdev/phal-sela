@@ -13,10 +13,6 @@ export default function ProjectDetail() {
   const navigate = useNavigate();
   const [visibleImages, setVisibleImages] = useState<Set<number>>(new Set());
   const imageRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const lastScrollY = useRef(0);
-  const isScrollingDown = useRef(false);
-  const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
-  const animationTriggered = useRef<Set<number>>(new Set());
   
   const project = portfolioData.projects.find(p => p.slug === slug);
 
@@ -27,53 +23,29 @@ export default function ProjectDetail() {
     }
   }, [project?.images]);
 
-  // Enhanced scroll-based animation system for images
+  // Simplified scroll-based animation system for images
   useEffect(() => {
     if (!project?.images) return;
 
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      const scrollDirection = currentScrollY > lastScrollY.current ? 'down' : 'up';
-      const scrollDelta = Math.abs(currentScrollY - lastScrollY.current);
-      
-      // Update scroll direction
-      isScrollingDown.current = scrollDirection === 'down' && scrollDelta > 10;
-      lastScrollY.current = currentScrollY;
+      imageRefs.current.forEach((ref, index) => {
+        if (!ref || visibleImages.has(index)) return;
 
-      // Clear existing timeout
-      if (scrollTimeout.current) {
-        clearTimeout(scrollTimeout.current);
-      }
+        const rect = ref.getBoundingClientRect();
+        const triggerPoint = window.innerHeight * 0.7; // Trigger when 70% of viewport
+        const isInView = rect.top < triggerPoint && rect.bottom > 0;
 
-      // Debounce scroll events for better performance
-      scrollTimeout.current = setTimeout(() => {
-        // If scrolling up, don't trigger any animations
-        if (!isScrollingDown.current) {
-          return;
+        if (isInView) {
+          // Add staggered delay for smooth sequential animations
+          setTimeout(() => {
+            setVisibleImages(prev => {
+              const newSet = new Set(prev);
+              newSet.add(index);
+              return newSet;
+            });
+          }, index * 150); // 150ms delay between each image
         }
-
-        imageRefs.current.forEach((ref, index) => {
-          if (!ref) return;
-
-          const rect = ref.getBoundingClientRect();
-          const triggerPoint = window.innerHeight * 0.8;
-          const isInView = rect.top < triggerPoint && rect.bottom > 0;
-
-          // Only trigger animation if scrolling down, in view, and not already triggered
-          if (isInView && !animationTriggered.current.has(index)) {
-            animationTriggered.current.add(index);
-            
-            // Add staggered delay for smooth sequential animations
-            setTimeout(() => {
-              setVisibleImages(prev => {
-                const newSet = new Set(prev);
-                newSet.add(index);
-                return newSet;
-              });
-            }, index * 100); // 200ms delay between each image
-          }
-        });
-      }, 50); // 50ms debounce
+      });
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -81,13 +53,24 @@ export default function ProjectDetail() {
     // Initial check for already visible images
     setTimeout(handleScroll, 100);
     
+    // Fallback: Make all images visible after 2 seconds if they haven't been triggered
+    const fallbackTimer = setTimeout(() => {
+      if (project.images) {
+        setVisibleImages(prev => {
+          const newSet = new Set(prev);
+          project.images.forEach((_, index) => {
+            newSet.add(index);
+          });
+          return newSet;
+        });
+      }
+    }, 2000);
+    
     return () => {
       window.removeEventListener('scroll', handleScroll);
-      if (scrollTimeout.current) {
-        clearTimeout(scrollTimeout.current);
-      }
+      clearTimeout(fallbackTimer);
     };
-  }, [project?.images]);
+  }, [project?.images, visibleImages]);
   
   if (!project) {
     return (
@@ -106,7 +89,7 @@ export default function ProjectDetail() {
     const isEven = index % 2 === 0;
     
     if (visibleImages.has(index)) {
-      return isEven ? 'project-visible-left' : 'project-visible-right';
+      return isEven ? 'project-visible-up' : 'project-visible-down';
     }
     
     return 'project-hidden';

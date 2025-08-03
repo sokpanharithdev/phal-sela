@@ -109,18 +109,18 @@
     },
     {
       "id": 5,
-      "title": "RENTKH Car Rent",
-      "slug": "rentkh-car-rent",
+      "title": "ASTER Studio",
+      "slug": "aster-studio",
       "category": "Web Design",
-      "image": "/sela/restin/thumbnail.png",
-      "fullDescription": "RESTIN is a hotel booking app designed to offer travelers a seamless and user-friendly way to discover, compare, and reserve accommodations. The project focuses on simplifying the booking process while delivering a polished, modern UI tailored for both local and international users.\n\n My role included designing the full UX/UI flow—from wireframes to high-fidelity prototypes—ensuring an intuitive user experience across all pages. I implemented a mobile-first approach with key features such as personalized hotel recommendations, smart filters, booking calendar, secure payment interface, and a clean booking confirmation screen. The app is crafted to build user trust, improve booking speed, and make travel planning feel effortless.",
+      "image": "/sela/aster/thumbnail.png",
+      "fullDescription": "ASTER Studio is more than just a clothing website — it’s a digital expression of attitude, identity, and bold aesthetics. This project reimagines the online shopping experience for a fashion-forward local brand by blending streetwear energy with refined, minimal design. From the first scroll, users are greeted with visually striking layouts, strong typography, and curated product highlights that communicate exclusivity and attitude. Every interaction—from browsing new arrivals to placing an order—is designed to feel effortless, intentional, and bold.\n\n In the ASTER Studio project, I took full responsibility as a UI/UX Designer, leading the entire design process from concept to final prototype. My goal was to craft a fashion e-commerce experience that feels premium, youthful, and easy to navigate.",
       "role": "UI/UX Designer",
       "technologies": ["Web Design"],
-      "screens": "50+",
+      "logo": "/sela/aster/logo.png",
       "images": [
-        "/sela/restin/1.png",
-        "/sela/restin/2.png",
-        "/sela/restin/3.png"
+        "/sela/aster/1.png",
+        "/sela/aster/2.png",
+        "/sela/aster/3.png"
       ],
       "link": "#"
     }
