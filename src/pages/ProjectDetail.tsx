@@ -70,7 +70,7 @@ export default function ProjectDetail() {
                 newSet.add(index);
                 return newSet;
               });
-            }, index * 200); // 200ms delay between each image
+            }, index * 100); // 200ms delay between each image
           }
         });
       }, 50); // 50ms debounce
