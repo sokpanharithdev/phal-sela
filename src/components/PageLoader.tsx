@@ -16,10 +16,10 @@ export const PageLoader = ({ children }: PageLoaderProps) => {
 
   // Show content when either loading is complete or progress is high enough
   useEffect(() => {
-    if (!isLoading || progress >= 80) {
+    if (!isLoading || progress >= 60) {
       const timer = setTimeout(() => {
         setShowContent(true);
-      }, 200);
+      }, 100);
       return () => clearTimeout(timer);
     }
   }, [isLoading, progress]);

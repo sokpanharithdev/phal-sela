@@ -7,7 +7,7 @@ export const useImagePreloader = () => {
 
   useEffect(() => {
     const preloadImages = async () => {
-      // Separate critical images (above the fold) from non-critical
+      // Only load critical images for faster initial load
       const criticalImages: string[] = [
         portfolioData.personal.profileImage,
         portfolioData.personal.profileImage1,
@@ -17,22 +17,8 @@ export const useImagePreloader = () => {
         '/sela/behance.svg',
       ];
 
-      const nonCriticalImages: string[] = [];
-
-      // Add project images to non-critical
-      portfolioData.projects.forEach(project => {
-        if (project.image) nonCriticalImages.push(project.image);
-        if (project.logo) nonCriticalImages.push(project.logo);
-        if (project.images) {
-          project.images.forEach(img => nonCriticalImages.push(img));
-        }
-      });
-
-      // Add other assets
-      nonCriticalImages.push('/sela/footer.png');
-
       let loadedCount = 0;
-      const totalImages = criticalImages.length + nonCriticalImages.length;
+      const totalImages = criticalImages.length;
 
       const loadImage = (src: string): Promise<void> => {
         return new Promise((resolve) => {
@@ -52,19 +38,14 @@ export const useImagePreloader = () => {
       };
 
       try {
-        // Load critical images first with higher priority
-        await Promise.all(criticalImages.map(loadImage));
+        // Load critical images with a timeout
+        const loadPromise = Promise.all(criticalImages.map(loadImage));
+        const timeoutPromise = new Promise(resolve => setTimeout(resolve, 500));
         
-        // Start loading non-critical images in background
-        const nonCriticalPromise = Promise.all(nonCriticalImages.map(loadImage));
+        await Promise.race([loadPromise, timeoutPromise]);
         
-        // Wait for either all images to load or a maximum time
-        const timeoutPromise = new Promise(resolve => setTimeout(resolve, 800));
-        
-        await Promise.race([nonCriticalPromise, timeoutPromise]);
-        
-        // Ensure minimum loading time for smooth UX (reduced from 1500ms to 800ms)
-        const minLoadingTime = 800;
+        // Very short minimum loading time for better UX
+        const minLoadingTime = 400;
         const elapsedTime = Date.now() - performance.now();
         const remainingTime = Math.max(0, minLoadingTime - elapsedTime);
         
