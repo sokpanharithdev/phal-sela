@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { LoadingScreen } from './LoadingScreen';
 import { useImagePreloader } from '../hooks/useImagePreloader';
 
@@ -13,6 +13,16 @@ export const PageLoader = ({ children }: PageLoaderProps) => {
   const handleLoadingComplete = () => {
     setShowContent(true);
   };
+
+  // Show content when either loading is complete or progress is high enough
+  useEffect(() => {
+    if (!isLoading || progress >= 80) {
+      const timer = setTimeout(() => {
+        setShowContent(true);
+      }, 200);
+      return () => clearTimeout(timer);
+    }
+  }, [isLoading, progress]);
 
   if (!showContent) {
     return (

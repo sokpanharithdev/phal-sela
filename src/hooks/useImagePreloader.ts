@@ -7,35 +7,35 @@ export const useImagePreloader = () => {
 
   useEffect(() => {
     const preloadImages = async () => {
-      const images: string[] = [];
+      // Separate critical images (above the fold) from non-critical
+      const criticalImages: string[] = [
+        portfolioData.personal.profileImage,
+        portfolioData.personal.profileImage1,
+        '/sela/linkedin.png',
+        '/sela/telegram.png',
+        '/sela/facebook.png',
+        '/sela/behance.svg',
+      ];
 
-      // Add profile images
-      images.push(portfolioData.personal.profileImage);
-      images.push(portfolioData.personal.profileImage1);
+      const nonCriticalImages: string[] = [];
 
-      // Add project images
+      // Add project images to non-critical
       portfolioData.projects.forEach(project => {
-        if (project.image) images.push(project.image);
-        if (project.logo) images.push(project.logo);
+        if (project.image) nonCriticalImages.push(project.image);
+        if (project.logo) nonCriticalImages.push(project.logo);
         if (project.images) {
-          project.images.forEach(img => images.push(img));
+          project.images.forEach(img => nonCriticalImages.push(img));
         }
       });
 
-      // Add social media icons
-      images.push('/sela/linkedin.png');
-      images.push('/sela/telegram.png');
-      images.push('/sela/facebook.png');
-      images.push('/sela/behance.svg');
-
       // Add other assets
-      images.push('/sela/footer.png');
+      nonCriticalImages.push('/sela/footer.png');
 
       let loadedCount = 0;
-      const totalImages = images.length;
+      const totalImages = criticalImages.length + nonCriticalImages.length;
 
       const loadImage = (src: string): Promise<void> => {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
           const img = new Image();
           img.onload = () => {
             loadedCount++;
@@ -52,10 +52,19 @@ export const useImagePreloader = () => {
       };
 
       try {
-        await Promise.all(images.map(loadImage));
+        // Load critical images first with higher priority
+        await Promise.all(criticalImages.map(loadImage));
         
-        // Ensure minimum loading time for smooth UX
-        const minLoadingTime = 1500;
+        // Start loading non-critical images in background
+        const nonCriticalPromise = Promise.all(nonCriticalImages.map(loadImage));
+        
+        // Wait for either all images to load or a maximum time
+        const timeoutPromise = new Promise(resolve => setTimeout(resolve, 800));
+        
+        await Promise.race([nonCriticalPromise, timeoutPromise]);
+        
+        // Ensure minimum loading time for smooth UX (reduced from 1500ms to 800ms)
+        const minLoadingTime = 800;
         const elapsedTime = Date.now() - performance.now();
         const remainingTime = Math.max(0, minLoadingTime - elapsedTime);
         
