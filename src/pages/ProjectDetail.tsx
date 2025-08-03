@@ -1,4 +1,5 @@
 import { useParams, useNavigate } from 'react-router-dom';
+import { useState, useEffect, useRef } from 'react';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -10,8 +11,83 @@ import portfolioData from '../data/portfolio.json';
 export default function ProjectDetail() {
   const { slug } = useParams();
   const navigate = useNavigate();
+  const [visibleImages, setVisibleImages] = useState<Set<number>>(new Set());
+  const imageRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const lastScrollY = useRef(0);
+  const isScrollingDown = useRef(false);
+  const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
+  const animationTriggered = useRef<Set<number>>(new Set());
   
   const project = portfolioData.projects.find(p => p.slug === slug);
+
+  // Initialize image refs
+  useEffect(() => {
+    if (project?.images) {
+      imageRefs.current = new Array(project.images.length).fill(null);
+    }
+  }, [project?.images]);
+
+  // Enhanced scroll-based animation system for images
+  useEffect(() => {
+    if (!project?.images) return;
+
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      const scrollDirection = currentScrollY > lastScrollY.current ? 'down' : 'up';
+      const scrollDelta = Math.abs(currentScrollY - lastScrollY.current);
+      
+      // Update scroll direction
+      isScrollingDown.current = scrollDirection === 'down' && scrollDelta > 10;
+      lastScrollY.current = currentScrollY;
+
+      // Clear existing timeout
+      if (scrollTimeout.current) {
+        clearTimeout(scrollTimeout.current);
+      }
+
+      // Debounce scroll events for better performance
+      scrollTimeout.current = setTimeout(() => {
+        // If scrolling up, don't trigger any animations
+        if (!isScrollingDown.current) {
+          return;
+        }
+
+        imageRefs.current.forEach((ref, index) => {
+          if (!ref) return;
+
+          const rect = ref.getBoundingClientRect();
+          const triggerPoint = window.innerHeight * 0.8;
+          const isInView = rect.top < triggerPoint && rect.bottom > 0;
+
+          // Only trigger animation if scrolling down, in view, and not already triggered
+          if (isInView && !animationTriggered.current.has(index)) {
+            animationTriggered.current.add(index);
+            
+            // Add staggered delay for smooth sequential animations
+            setTimeout(() => {
+              setVisibleImages(prev => {
+                const newSet = new Set(prev);
+                newSet.add(index);
+                return newSet;
+              });
+            }, index * 200); // 200ms delay between each image
+          }
+        });
+      }, 50); // 50ms debounce
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    // Initial check for already visible images
+    setTimeout(handleScroll, 100);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (scrollTimeout.current) {
+        clearTimeout(scrollTimeout.current);
+      }
+    };
+  }, [project?.images]);
   
   if (!project) {
     return (
@@ -25,6 +101,16 @@ export default function ProjectDetail() {
       </PageLoader>
     );
   }
+
+  const getImageAnimationClass = (index: number) => {
+    const isEven = index % 2 === 0;
+    
+    if (visibleImages.has(index)) {
+      return isEven ? 'project-visible-left' : 'project-visible-right';
+    }
+    
+    return 'project-hidden';
+  };
 
   return (
     <PageLoader>
@@ -71,15 +157,21 @@ export default function ProjectDetail() {
           {/* Project Images */}
           <div className="space-y-8">
             {project.images?.map((image, index) => (
-              <Card key={index} className="overflow-hidden">
-                <div className="overflow-hidden shadow-2xl">
-                  <img 
-                    src={image} 
-                    alt={`${project.title} screenshot ${index + 1}`}
-                    className="w-full h-auto object-cover"
-                  />
-                </div>
-              </Card>
+              <div
+                key={index}
+                ref={el => imageRefs.current[index] = el}
+                className={`${getImageAnimationClass(index)}`}
+              >
+                <Card className="overflow-hidden">
+                  <div className="overflow-hidden shadow-2xl">
+                    <img 
+                      src={image} 
+                      alt={`${project.title} screenshot ${index + 1}`}
+                      className="w-full h-auto object-cover"
+                    />
+                  </div>
+                </Card>
+              </div>
             ))}
           </div>
         </div>
