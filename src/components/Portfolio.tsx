@@ -14,69 +14,76 @@ export const Portfolio = () => {
   const [countB, setCountB] = useState(0);
   const [activeTab, setActiveTab] = useState('portfolio');
   const [showAbout, setShowAbout] = useState(false);
-  const [projectAnimations, setProjectAnimations] = useState<('hidden' | 'entering' | 'visible' | 'exiting')[]>([]);
+  const [visibleProjects, setVisibleProjects] = useState<Set<number>>(new Set());
   const projectRefs = useRef<(HTMLDivElement | null)[]>([]);
   const lastScrollY = useRef(0);
+  const isScrollingDown = useRef(false);
+  const scrollTimeout = useRef<NodeJS.Timeout | null>(null);
+  const animationTriggered = useRef<Set<number>>(new Set());
 
-  // Initialize project animation states
+  // Initialize project refs
   useEffect(() => {
-    setProjectAnimations(new Array(portfolioData.projects.length).fill('hidden'));
+    projectRefs.current = new Array(portfolioData.projects.length).fill(null);
   }, []);
 
-  // Enhanced Intersection Observer for bidirectional animations
+  // Enhanced scroll-based animation system
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       const scrollDirection = currentScrollY > lastScrollY.current ? 'down' : 'up';
+      const scrollDelta = Math.abs(currentScrollY - lastScrollY.current);
+      
+      // Update scroll direction
+      isScrollingDown.current = scrollDirection === 'down' && scrollDelta > 10;
       lastScrollY.current = currentScrollY;
 
-      projectRefs.current.forEach((ref, index) => {
-        if (!ref) return;
+      // Clear existing timeout
+      if (scrollTimeout.current) {
+        clearTimeout(scrollTimeout.current);
+      }
 
-        const rect = ref.getBoundingClientRect();
-        const isVisible = rect.top < window.innerHeight * 0.8 && rect.bottom > window.innerHeight * 0.2;
+      // Debounce scroll events for better performance
+      scrollTimeout.current = setTimeout(() => {
+        // If scrolling up, don't trigger any animations
+        if (!isScrollingDown.current) {
+          return;
+        }
 
-        setProjectAnimations(prev => {
-          const newState = [...prev];
-          
-          if (isVisible && (prev[index] === 'hidden' || prev[index] === 'exiting')) {
-            newState[index] = 'entering';
+        projectRefs.current.forEach((ref, index) => {
+          if (!ref) return;
+
+          const rect = ref.getBoundingClientRect();
+          const triggerPoint = window.innerHeight * 0.8;
+          const isInView = rect.top < triggerPoint && rect.bottom > 0;
+
+          // Only trigger animation if scrolling down, in view, and not already triggered
+          if (isInView && !animationTriggered.current.has(index)) {
+            animationTriggered.current.add(index);
             
-            // Set to visible after animation completes
+            // Add staggered delay for smooth sequential animations
             setTimeout(() => {
-              setProjectAnimations(current => {
-                const updated = [...current];
-                if (updated[index] === 'entering') {
-                  updated[index] = 'visible';
-                }
-                return updated;
+              setVisibleProjects(prev => {
+                const newSet = new Set(prev);
+                newSet.add(index);
+                return newSet;
               });
-            }, 800);
-            
-          } else if (!isVisible && (prev[index] === 'visible' || prev[index] === 'entering')) {
-            newState[index] = 'exiting';
-            
-            // Set to hidden after animation completes
-            setTimeout(() => {
-              setProjectAnimations(current => {
-                const updated = [...current];
-                if (updated[index] === 'exiting') {
-                  updated[index] = 'hidden';
-                }
-                return updated;
-              });
-            }, 600);
+            }, index * 150); // 150ms delay between each project
           }
-          
-          return newState;
         });
-      });
+      }, 50); // 50ms debounce
     };
 
-    window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Check initial state
+    window.addEventListener('scroll', handleScroll, { passive: true });
     
-    return () => window.removeEventListener('scroll', handleScroll);
+    // Initial check for already visible projects
+    setTimeout(handleScroll, 100);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (scrollTimeout.current) {
+        clearTimeout(scrollTimeout.current);
+      }
+    };
   }, []);
 
   // Handle About Me toggle with animation
@@ -128,7 +135,7 @@ export const Portfolio = () => {
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 flex items-center justify-center pt-[50%] sm:pt-[30%] md:pt-[35%]">
-                <p className="h-1.5 text-5xl sm:text-6xl md:text-7xl font-bold drop-shadow-2xl tracking-wider text-center px-4 dark:text-white text-black dark:shadow-none">{portfolioData.personal.name}</p>
+                <p className="h-1.5 text-5xl sm:text-6xl md:text-7xl font-bold drop-shadow-2xl tracking-wider text-center px-4 dark:text-white text-black dark:shadow-none text-primary">{portfolioData.personal.name}</p>
               </div>
             </div>
           </div>
@@ -165,7 +172,7 @@ export const Portfolio = () => {
               variant={activeTab === 'portfolio' ? 'default' : 'ghost'}
               style={{ backgroundColor: 'inherit', }}
               onClick={() => setActiveTab('portfolio')}
-              className={activeTab === 'portfolio' ? "[box-shadow:0_-2.5px_0px_-1px_rgba(255,255,255,0.2),0_-2px_0px_-2px_rgba(0,0,0,0.1)] text-lg px-8 text-primary" : "[box-shadow:0_-3px_0px_-1px_rgba(255,255,255,0.1),0_-2px_0px_-2px_rgba(0,0,0,0.1)] text-lg px-8 hover:text-primary"}
+              className={activeTab === 'portfolio' ? "[box-shadow:0_-2.5px_0px_-1px_rgba(0,0,0,0.2),0_-2px_0px_-2px_rgba(0,0,0,0.1)] dark:[box-shadow:0_-2.5px_0px_-1px_rgba(255,255,255,0.2),0_-2px_0px_-2px_rgba(0,0,0,0.1)] text-lg px-8 text-primary" : "[box-shadow:0_-2.5px_0px_-1px_rgba(0,0,0,0.2),0_-2px_0px_-2px_rgba(0,0,0,0.1)] dark:[box-shadow:0_-3px_0px_-1px_rgba(255,255,255,0.1),0_-2px_0px_-2px_rgba(0,0,0,0.1)] text-lg px-8 hover:text-primary"}
             >
               Portfolio
             </Button>
@@ -173,7 +180,7 @@ export const Portfolio = () => {
               variant={activeTab === 'skills' ? 'default' : 'ghost'}
               style={{ backgroundColor: 'inherit', }}
               onClick={() => setActiveTab('skills')}
-              className={activeTab === 'skills' ? "[box-shadow:0_-2.5px_0px_-1px_rgba(255,255,255,0.2),0_-2px_0px_-2px_rgba(0,0,0,0.1)] text-lg px-8 text-primary" : "[box-shadow:0_-3px_0px_-1px_rgba(255,255,255,0.1),0_-2px_0px_-2px_rgba(0,0,0,0.1)] text-lg px-8 hover:text-primary"}
+              className={activeTab === 'skills' ? "[box-shadow:0_-2.5px_0px_-1px_rgba(0,0,0,0.2),0_-2px_0px_-2px_rgba(0,0,0,0.1)] dark:[box-shadow:0_-2.5px_0px_-1px_rgba(255,255,255,0.2),0_-2px_0px_-2px_rgba(0,0,0,0.1)] text-lg px-8 text-primary" : "[box-shadow:0_-2.5px_0px_-1px_rgba(0,0,0,0.2),0_-2px_0px_-2px_rgba(0,0,0,0.1)] dark:[box-shadow:0_-3px_0px_-1px_rgba(255,255,255,0.1),0_-2px_0px_-2px_rgba(0,0,0,0.1)] text-lg px-8 hover:text-primary"}
             >
               Skills
             </Button>
@@ -277,7 +284,7 @@ export const Portfolio = () => {
                       <ProjectCard 
                         project={project}
                         index={index}
-                        animationState={projectAnimations[index] || 'hidden'}
+                        isVisible={visibleProjects.has(index)}
                       />
                     </div>
                   ))}
@@ -292,7 +299,7 @@ export const Portfolio = () => {
               <div className="flex justify-center gap-16 mb-16 md:flex-row flex-col">
                 <div className="text-center">
                   <div className='w-full flex justify-center'>
-                    <div className='w-40 rounded-md [box-shadow:0_-3px_0px_-1px_rgba(255,255,255,0.1),0_-2px_0px_-2px_rgba(0,0,0,0.1)]'>
+                    <div className='w-40 rounded-md [box-shadow:0_-2.5px_0px_-1px_rgba(0,0,0,0.2),0_-2px_0px_-2px_rgba(0,0,0,0.1)] dark:[box-shadow:0_-3px_0px_-1px_rgba(255,255,255,0.1),0_-2px_0px_-2px_rgba(0,0,0,0.1)]'>
                       <h3 className="text-2xl font-semibold text-foreground mb-8">UX</h3>
                     </div>
                   </div>
@@ -302,7 +309,7 @@ export const Portfolio = () => {
                       {portfolioData.skills.UX.map((skill, index) => (
                         <div
                           key={index}
-                          className="bg-secondary/10 backdrop-blur-sm rounded-lg px-4 py-3 text-center hover:bg-secondary/20 transition-colors"
+                          className="bg-[#F2F2F2] dark:bg-secondary/10 dark:backdrop-blur-sm rounded-lg px-4 py-3 text-center hover:bg-secondary/20 transition-colors"
                         >
                           <span className="text-sm font-medium text-primary">{skill}</span>
                         </div>
@@ -313,7 +320,7 @@ export const Portfolio = () => {
                 
                 <div className="text-center">
                   <div className='w-full flex justify-center'>
-                    <div className='w-40 rounded-md [box-shadow:0_-3px_0px_-1px_rgba(255,255,255,0.1),0_-2px_0px_-2px_rgba(0,0,0,0.1)]'>
+                    <div className='w-40 rounded-md [box-shadow:0_-2.5px_0px_-1px_rgba(0,0,0,0.2),0_-2px_0px_-2px_rgba(0,0,0,0.1)] dark:[box-shadow:0_-3px_0px_-1px_rgba(255,255,255,0.1),0_-2px_0px_-2px_rgba(0,0,0,0.1)]'>
                       <h3 className="text-2xl font-semibold text-foreground mb-8">UI</h3>
                     </div>
                   </div>
@@ -322,7 +329,7 @@ export const Portfolio = () => {
                       {portfolioData.skills.UI.map((skill, index) => (
                         <div
                           key={index}
-                          className="bg-secondary/10 backdrop-blur-sm rounded-lg px-4 py-3 text-center hover:bg-secondary/20 transition-colors"
+                          className="bg-[#F2F2F2] dark:bg-secondary/10 dark:backdrop-blur-sm rounded-lg px-4 py-3 text-center dark:hover:bg-secondary/20 hover:bg-[#F2F2F2] transition-colors"
                         >
                           <span className="text-sm font-medium text-primary">{skill}</span>
                         </div>

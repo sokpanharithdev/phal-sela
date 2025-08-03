@@ -18,25 +18,20 @@ interface Project {
 interface ProjectCardProps {
   project: Project;
   index: number;
-  animationState: 'hidden' | 'entering' | 'visible' | 'exiting';
+  isVisible: boolean;
 }
 
-export const ProjectCard = ({ project, index, animationState }: ProjectCardProps) => {
+export const ProjectCard = ({ project, index, isVisible }: ProjectCardProps) => {
   const navigate = useNavigate();
 
   const getAnimationClass = () => {
     const isEven = index % 2 === 0;
-
-    switch (animationState) {
-      case 'entering':
-        return isEven ? 'slide-in-left' : 'slide-in-right';
-      case 'exiting':
-        return isEven ? 'slide-out-left' : 'slide-out-right';
-      case 'visible':
-        return 'opacity-100';
-      default:
-        return 'project-hidden';
+    
+    if (isVisible) {
+      return isEven ? 'project-visible-left' : 'project-visible-right';
     }
+    
+    return 'project-hidden';
   };
 
   const handleViewProject = () => {
@@ -46,13 +41,13 @@ export const ProjectCard = ({ project, index, animationState }: ProjectCardProps
   return (
     <Card className={`group project-card overflow-hidden bg-card/50 backdrop-blur-sm border-border/50 ${getAnimationClass()} hover:cursor-pointer hover:shadow-lg transition-shadow duration-200`}
       onClick={handleViewProject}>
-      <div className="relative  overflow-hidden aspect-[5/3]">
+      <div className="relative bg-white dark:bg-black overflow-hidden aspect-ratio-16/9">
         <img
           src={project.image}
           alt={project.title}
           className="w-full h-120 object-cover transition-transform duration-300 ease-in-out group-hover:scale-110"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+        {/* <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" /> */}
       </div>
 
       <div className="p-6">
