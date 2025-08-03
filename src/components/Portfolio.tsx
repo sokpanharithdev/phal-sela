@@ -14,11 +14,9 @@ export const Portfolio = () => {
   const [countB, setCountB] = useState(0);
   const [activeTab, setActiveTab] = useState('portfolio');
   const [showAbout, setShowAbout] = useState(false);
-  const [aboutAnimating, setAboutAnimating] = useState(false);
   const [projectAnimations, setProjectAnimations] = useState<('hidden' | 'entering' | 'visible' | 'exiting')[]>([]);
   const projectRefs = useRef<(HTMLDivElement | null)[]>([]);
   const lastScrollY = useRef(0);
-  const contentRef = useRef(null);
 
   // Initialize project animation states
   useEffect(() => {
@@ -83,25 +81,7 @@ export const Portfolio = () => {
 
   // Handle About Me toggle with animation
   const handleAboutToggle = () => {
-    if (showAbout) {
-      const content = contentRef.current;
-      if (content) {
-        const height = content.scrollHeight + 'px';
-        content.style.setProperty('--collapse-height', height);
-      }
-
-      setAboutAnimating(true);
-      setTimeout(() => {
-        setShowAbout(false);
-        setAboutAnimating(false);
-      }, 300);
-    } else {
-      setTimeout(() => {
-        setShowAbout(true);
-        setAboutAnimating(true);
-        setAboutAnimating(false);
-      }, 300);
-    }
+    setShowAbout(!showAbout);
   };
 
   useEffect(() => {
@@ -141,13 +121,13 @@ export const Portfolio = () => {
         <div className="text-center max-w-4xl mx-auto">
           {/* Profile Image with Name Overlay */}
           <div className="relative mb-8">
-            <div className="w-48 h-48 mx-auto overflow-hidden">
+            <div className="w-48 h-60 mx-auto overflow-hidden">
               <img
                 src={portfolioData.personal.profileImage}
                 alt={portfolioData.personal.name}
                 className="w-full h-full object-cover"
               />
-              <div className="absolute inset-0 flex items-center justify-center pt-[45%] sm:pt-[30%] md:pt-[25%]">
+              <div className="absolute inset-0 flex items-center justify-center pt-[50%] sm:pt-[30%] md:pt-[35%]">
                 <p className="h-1.5 text-5xl sm:text-6xl md:text-7xl font-bold drop-shadow-2xl tracking-wider text-center px-4 dark:text-white text-black dark:shadow-none">{portfolioData.personal.name}</p>
               </div>
             </div>
@@ -218,61 +198,59 @@ export const Portfolio = () => {
                       <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${showAbout ? 'rotate-180' : ''}`} />
                     </div>
                   </div>
-                  <div>
-                    {(showAbout || aboutAnimating) && (
-                      <div>
-                        <div style={{display: showAbout && !aboutAnimating ? 'block' : 'none'}} className="grid md:grid-cols-2 gap-8 mt-8">
+                  <div className={`about-container ${showAbout ? 'expanded' : 'collapsed'}`}>
+                    <div className="about-content">
+                      <div className="w-full max-w-4xl mx-auto">
+                        <div className="grid md:grid-cols-1 gap-8 mt-8">
                           {/* Profile Card */}
-                          <div className={`grid xs:grid-cols-1 md:grid-cols-2 gap-8 overflow-hidden transition-all ${
-          showAbout ? 'animate-expand' : 'animate-collapse'
-        }`}>
-                            <Card className="p-6 border-none bg-white/5">
-                              <div className="text-center">
-                                <div className="w-32 h-4/6 mx-auto rounded-md overflow-hidden mb-6">
-                                  <img
-                                    src={portfolioData.personal.profileImage1}
-                                    alt={portfolioData.personal.name}
-                                    className="w-full h-full object-cover"
-                                  />
-                                </div>
-                                <h3 className="text-2xl font-bold text-foreground mb-2">
-                                  Phal Sela
-                                </h3>
-                                <p className="text-lg text-foreground mb-6">
-                                  UX UI Designer
-                                </p>
-                                <p className="text-foreground leading-relaxed">
-                                  {portfolioData.personal.aboutMe}
-                                </p>
+                          <div className="grid xs:grid-cols-1 md:grid-cols-2 gap-8">
+                          <Card className="p-6 border-none bg-white/5">
+                            <div className="text-center">
+                              <div className="w-32 h-4/6 mx-auto rounded-md overflow-hidden mb-6">
+                                <img
+                                  src={portfolioData.personal.profileImage1}
+                                  alt={portfolioData.personal.name}
+                                  className="w-full h-full object-cover"
+                                />
                               </div>
-                            </Card>
+                              <h3 className="text-2xl font-bold text-foreground mb-2">
+                                Phal Sela
+                              </h3>
+                              <p className="text-lg text-foreground mb-6">
+                                UX UI Designer
+                              </p>
+                              <p className="text-foreground leading-relaxed">
+                                {portfolioData.personal.aboutMe}
+                              </p>
+                            </div>
+                          </Card>
 
-                            {/* Education Timeline */}
-                            <Card className="backdrop-blur-sm border-none ">
-                              <div className="space-y-6 flex flex-col justify-between">
-                                {portfolioData.personal.education?.map((edu, index) => (
-                                  <div key={index} className='px-3 [box-shadow:0_-3px_0px_-1px_rgba(255,255,255,0.1),0_-2px_0px_-2px_rgba(0,0,0,0.1)] pb-10 rounded-sm pt-3'>
-                                    <div className=""></div>
-                                    <div className="flex justify-between items-start mb-2">
-                                      <h4 className="text-lg font-semibold text-foreground">
-                                        {edu.title}
-                                      </h4>
-                                      <span className="text-sm text-muted-foreground bg-secondary/20 px-3 py-1 rounded-full">
-                                        {edu.period}
-                                      </span>
-                                    </div>
-                                    <p className="text-muted-foreground text-sm leading-relaxed">
-                                      {edu.description}
-                                    </p>
+                          {/* Education Timeline */}
+                          <Card className="backdrop-blur-sm border-none ">
+                            <div className="space-y-6 flex flex-col justify-between">
+                              {portfolioData.personal.education?.map((edu, index) => (
+                                <div key={index} className='px-3 [box-shadow:0_-3px_0px_-1px_rgba(255,255,255,0.1),0_-2px_0px_-2px_rgba(0,0,0,0.1)] pb-10 rounded-sm pt-3'>
+                                  <div className=""></div>
+                                  <div className="flex justify-between items-start mb-2">
+                                    <h4 className="text-lg font-semibold text-foreground">
+                                      {edu.title}
+                                    </h4>
+                                    <span className="text-sm text-muted-foreground bg-secondary/20 px-3 py-1 rounded-full">
+                                      {edu.period}
+                                    </span>
                                   </div>
-                                ))}
-                              </div>
-                            </Card>
-                          </div>
+                                  <p className="text-muted-foreground text-sm leading-relaxed">
+                                    {edu.description}
+                                  </p>
+                                </div>
+                              ))}
+                            </div>
+                          </Card>
                         </div>
                       </div>
-                    )}
+                    </div>
                   </div>
+                </div>
                 </div>
               </div>
 

@@ -21,7 +21,7 @@ export const SocialIcons = ({ socialLinks }: SocialIconsProps) => {
       link: socialLinks.behance, 
       color: "#1669FE" 
     },
-    { icon: FB, link: socialLinks.facebook, color: "#0068E5" },
+    { icon: FB, link: socialLinks.facebook, color: "#006CE4" },
   ];
 
   return (
@@ -33,7 +33,7 @@ export const SocialIcons = ({ socialLinks }: SocialIconsProps) => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <div className='rounded-full' style={{ backgroundColor: color, width: '32px', height: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div className={`rounded-full ${index === 3 ? 'bg-gradient-to-t from-[#0064E2] to-[#2FB2FF]' : ''}`} style={{ backgroundColor: color, width: '32px', height: '32px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <img alt="social" src={Icon} className='w-6 h-6 rounded-full' />
           </div>
         </a>

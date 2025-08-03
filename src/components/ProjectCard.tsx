@@ -50,7 +50,7 @@ export const ProjectCard = ({ project, index, animationState }: ProjectCardProps
         <img
           src={project.image}
           alt={project.title}
-          className="w-full h-full object-cover transition-transform duration-300 ease-in-out group-hover:scale-110"
+          className="w-full h-120 object-cover transition-transform duration-300 ease-in-out group-hover:scale-110"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
       </div>
@@ -65,7 +65,7 @@ export const ProjectCard = ({ project, index, animationState }: ProjectCardProps
                 <Badge
                   key={idx}
                   variant="outline"
-                  className="text-xs border-border/50 text-foreground dark:border-white"
+                  className="text-xs border-black text-foreground dark:border-white"
                 >
                   <p className='text-foreground'>{tech}</p>
                 </Badge>
