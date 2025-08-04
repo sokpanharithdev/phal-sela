@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Info</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .info {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .error {
+            background: #ffebee;
+            color: #c62828;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .success {
+            background: #e8f5e8;
+            color: #2e7d32;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        pre {
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Debug Information</h1>
+        <p>This page helps diagnose deployment issues on Vercel.</p>
+        
+        <div id="debug-info"></div>
+        
+        <div class="info">
+            <h3>Environment Information</h3>
+            <div id="env-info"></div>
+        </div>
+        
+        <div class="info">
+            <h3>Browser Information</h3>
+            <div id="browser-info"></div>
+        </div>
+        
+        <div class="info">
+            <h3>Network Information</h3>
+            <div id="network-info"></div>
+        </div>
+    </div>
+
+    <script>
+        function addInfo(title, content, type = 'info') {
+            const debugInfo = document.getElementById('debug-info');
+            const div = document.createElement('div');
+            div.className = type;
+            div.innerHTML = `<h3>${title}</h3><div>${content}</div>`;
+            debugInfo.appendChild(div);
+        }
+
+        // Environment info
+        const envInfo = document.getElementById('env-info');
+        envInfo.innerHTML = `
+            <p><strong>User Agent:</strong> ${navigator.userAgent}</p>
+            <p><strong>Platform:</strong> ${navigator.platform}</p>
+            <p><strong>Language:</strong> ${navigator.language}</p>
+            <p><strong>Cookies Enabled:</strong> ${navigator.cookieEnabled}</p>
+            <p><strong>Online:</strong> ${navigator.onLine}</p>
+        `;
+
+        // Browser capabilities
+        const browserInfo = document.getElementById('browser-info');
+        browserInfo.innerHTML = `
+            <p><strong>Service Worker:</strong> ${'serviceWorker' in navigator ? 'Supported' : 'Not Supported'}</p>
+            <p><strong>Cache API:</strong> ${'caches' in window ? 'Supported' : 'Not Supported'}</p>
+            <p><strong>Local Storage:</strong> ${typeof(Storage) !== "undefined" ? 'Supported' : 'Not Supported'}</p>
+            <p><strong>Session Storage:</strong> ${typeof(sessionStorage) !== "undefined" ? 'Supported' : 'Not Supported'}</p>
+        `;
+
+        // Network info
+        const networkInfo = document.getElementById('network-info');
+        networkInfo.innerHTML = `
+            <p><strong>Connection Type:</strong> ${navigator.connection ? navigator.connection.effectiveType : 'Unknown'}</p>
+            <p><strong>Downlink:</strong> ${navigator.connection ? navigator.connection.downlink + ' Mbps' : 'Unknown'}</p>
+        `;
+
+        // Test main app loading
+        addInfo('Testing Main App', 'Testing if the main app can load...', 'info');
+        
+        fetch('/')
+            .then(response => {
+                if (response.ok) {
+                    addInfo('Main App Status', '✅ Main app loads successfully', 'success');
+                } else {
+                    addInfo('Main App Status', `❌ Main app failed to load: ${response.status}`, 'error');
+                }
+            })
+            .catch(error => {
+                addInfo('Main App Status', `❌ Main app failed to load: ${error.message}`, 'error');
+            });
+
+        // Test service worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.getRegistrations()
+                .then(registrations => {
+                    if (registrations.length > 0) {
+                        addInfo('Service Worker', `✅ ${registrations.length} service worker(s) registered`, 'success');
+                    } else {
+                        addInfo('Service Worker', '⚠️ No service workers registered', 'info');
+                    }
+                })
+                .catch(error => {
+                    addInfo('Service Worker', `❌ Service worker error: ${error.message}`, 'error');
+                });
+        }
+
+        // Test cache
+        if ('caches' in window) {
+            caches.keys()
+                .then(cacheNames => {
+                    if (cacheNames.length > 0) {
+                        addInfo('Cache', `✅ ${cacheNames.length} cache(s) found: ${cacheNames.join(', ')}`, 'success');
+                    } else {
+                        addInfo('Cache', '⚠️ No caches found', 'info');
+                    }
+                })
+                .catch(error => {
+                    addInfo('Cache', `❌ Cache error: ${error.message}`, 'error');
+                });
+        }
+
+        // Add timestamp
+        addInfo('Debug Time', new Date().toISOString(), 'info');
+    </script>
+</body>
+</html> 
