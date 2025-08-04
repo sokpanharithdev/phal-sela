@@ -2,7 +2,7 @@ import React from 'react';
 
 export const AppLoader: React.FC = () => {
   return (
-    <div className="fixed inset-0 z-50 bg-background flex items-center justify-center">
+    <div className="fixed inset-0 z-50 bg-background text-foreground flex items-center justify-center dark">
       <div className="text-center">
         {/* Logo/Name Animation */}
         <div className="mb-8 animate-scaleIn">
