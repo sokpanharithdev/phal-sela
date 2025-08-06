@@ -112,8 +112,10 @@ export default function ProjectDetail() {
           </Button>
 
           {/* Project Header */}
-          <div className="flex justify-center items-center mb-16 mt-10">
-            <img alt='profile' src={project.logo} width={150} height={150}/>
+          <div className="flex justify-center items-center mb-16 mt-10 w-full">
+            <div className={`${project.id === 5 && 'bg-[#08090A]'} rounded-full w-[150px]`}>
+              <img alt='profile' src={project.logo} width={150} height={150}/>
+            </div>
           </div>
 
           {/* Full Description */}
