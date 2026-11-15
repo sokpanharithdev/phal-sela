@@ -123,6 +123,40 @@
         "/sela/aster/3.png"
       ],
       "link": "#"
+    },
+    {
+      "id": 6,
+      "title": "YelloTrack",
+      "slug": "yellotrack",
+      "category": "Dashboard",
+      "image": "/sela/yellotrack/thumbnail.png",
+      "fullDescription": "YelloTrack is a data-driven sales management dashboard designed to help businesses monitor and optimize their sales performance in real time. The platform provides a clean, modern, and intuitive interface for tracking key metrics such as total revenue, transactions, customers, and product performance. The goal was to create a system that not only visualizes sales data effectively but also enhances decision-making through interactive analytics and easy-to-read reports.\n\n I was responsible for the entire UX/UI design of the YelloTrack Dashboard, focusing on creating a clear information hierarchy and visually engaging data visualization. I worked on defining the layout, color scheme, and component design to maintain clarity while ensuring a professional and energetic feel.",
+      "role": "UI/UX Designer",
+      "technologies": ["Dashboard"],
+      "logo": "/sela/yellotrack/logo.png",
+      "images": [
+        "/sela/yellotrack/1.png",
+        "/sela/yellotrack/2.png",
+        "/sela/yellotrack/3.png"
+      ],
+      "link": "#"
+    },
+    {
+      "id": 7,
+      "title": "Enspire HR",
+      "slug": "enspire-hr",
+      "category": "Mobile App",
+      "image": "/sela/enspire/thumbnail.png",
+      "fullDescription": "Enspire HR is a mobile Human Resource Management application designed to simplify and streamline daily HR operations. The application provides an efficient and user-friendly platform for employees to manage attendance, leave requests, overtime, on-duty requests, and notifications in one centralized system. The goal was to create a seamless mobile experience that improves employee engagement, simplifies HR processes, and enhances workplace productivity.\n\n I was responsible for the overall UX/UI design of the Enspire HR Mobile App, focusing on creating intuitive user interfaces and smooth user experiences. I designed key features including onboarding, login, home dashboard, attendance tracking, leave management, and notifications. I also worked closely with developers to ensure design consistency, usability, and accurate implementation.",
+      "role": "UI/UX Designer",
+      "technologies": ["Mobile App"],
+      "logo": "/sela/enspire/logo.png",
+      "images": [
+        "/sela/enspire/1.png",
+        "/sela/enspire/2.png",
+        "/sela/enspire/3.png"
+      ],
+      "link": "#"
     }
   ],
   "skills": {

@@ -96,7 +96,7 @@ export const Portfolio = () => {
     let b = 0;
 
     const intervalA = setInterval(() => {
-      if (a <= 2) {
+      if (a <= 3) {
         setCountA(a);
         a += 1;
       } else {
@@ -105,7 +105,7 @@ export const Portfolio = () => {
     }, 100);
 
     const intervalB = setInterval(() => {
-      if (b <= 5) {
+      if (b <= 6) {
         setCountB(b);
         b += 1;
       } else {
